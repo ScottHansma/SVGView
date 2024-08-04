@@ -18,7 +18,7 @@ public class SVGHelper: NSObject {
     }
 
     static func parseId(_ dict: [String: String]) -> String? {
-        return dict["id"] ?? dict["xml:id"]
+        return dict["id"] ?? dict["xml:id"] ?? dict["vectornator:layerName"]
     }
 
     static func parseStroke(_ style: [String: String], index: SVGIndex) -> SVGStroke? {
