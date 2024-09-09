@@ -44,7 +44,7 @@ struct SVGGroupView: View {
         ZStack {
             ForEach(0..<model.contents.count, id: \.self) { i in
                 if model.opacity > 0 && i <= model.contents.count - 1 {
-                    if model.opacity > 0 { model.contents[i].toSwiftUI() }
+                    if model.contents[i].opacity > 0 { model.contents[i].toSwiftUI() }
                 }
             }
         }
