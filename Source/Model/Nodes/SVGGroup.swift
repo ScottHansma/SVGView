@@ -32,7 +32,7 @@ public class SVGGroup: SVGNode, ObservableObject {
     }
 
     public func contentView() -> some View {
-        SVGGroupView(model: self)
+        SVGGroupView(model: self) 
     }
 }
 
@@ -43,8 +43,8 @@ struct SVGGroupView: View {
     public var body: some View {
         ZStack {
             ForEach(0..<model.contents.count, id: \.self) { i in
-                if i <= model.contents.count - 1 {
-                    model.contents[i].toSwiftUI()
+                if model.opacity > 0 && i <= model.contents.count - 1 {
+                    if model.opacity > 0 { model.contents[i].toSwiftUI() }
                 }
             }
         }
