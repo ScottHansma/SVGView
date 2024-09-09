@@ -32,7 +32,7 @@ public class SVGGroup: SVGNode, ObservableObject {
     }
 
     public func contentView() -> some View {
-        SVGGroupView(model: self) 
+        SVGGroupView(model: self)
     }
 }
 
