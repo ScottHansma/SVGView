@@ -65,41 +65,58 @@ public class SVGNode: SerializableElement {
 }
 
 extension SVGNode {
-    @ViewBuilder
+    //@ViewBuilder
     public func toSwiftUI() -> some View {
-        switch self {
-        case let model as SVGViewport:
-            SVGViewportView(model: model)
-        case let model as SVGGroup:
-            model.contentView()
-        case let model as SVGRect:
-            model.contentView()
-        case let model as SVGText:
-            model.contentView()
-        case let model as SVGDataImage:
-            model.contentView()
-        case let model as SVGURLImage:
-            model.contentView()
-        case let model as SVGEllipse:
-            model.contentView()
-        case let model as SVGLine:
-            model.contentView()
-        case let model as SVGPolyline:
-            model.contentView()
-        case let model as SVGPath:
-            model.contentView()
-        case let model as SVGCircle:
-            model.contentView()
-        case let model as SVGUserSpaceNode:
-            model.contentView()
-        case let model as SVGPolygon:
-            model.contentView()
-        case is SVGImage:
-            fatalError("Base SVGImage is not convertable to SwiftUI")
-        case is SVGShape:
-            fatalError("Base shape SVGShape is not convertable to SwiftUI")
-        default:
-            fatalError("Base SVGNode is not convertable to SwiftUI")
+        let startTime = DispatchTime.now()
+        
+        // Wrap the entire switch statement in a `Group` to ensure a consistent return type
+        let view = Group {
+            switch self {
+            case let model as SVGViewport:
+                SVGViewportView(model: model)
+            case let model as SVGGroup:
+                model.contentView()
+            case let model as SVGRect:
+                model.contentView()
+            case let model as SVGText:
+                model.contentView()
+            case let model as SVGDataImage:
+                model.contentView()
+            case let model as SVGURLImage:
+                model.contentView()
+            case let model as SVGEllipse:
+                model.contentView()
+            case let model as SVGLine:
+                model.contentView()
+            case let model as SVGPolyline:
+                model.contentView()
+            case let model as SVGPath:
+                model.contentView()
+            case let model as SVGCircle:
+                model.contentView()
+            case let model as SVGUserSpaceNode:
+                model.contentView()
+            case let model as SVGPolygon:
+                model.contentView()
+            case is SVGImage:
+                fatalError("Base SVGImage is not convertible to SwiftUI")
+            case is SVGShape:
+                fatalError("Base shape SVGShape is not convertible to SwiftUI")
+            default:
+                fatalError("Base SVGNode is not convertible to SwiftUI")
+            }
         }
+
+        defer {
+            let endTime = DispatchTime.now()
+            let nanoTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
+            let timeInterval = Double(nanoTime) / 1_000_000 // Convert to ms
+            
+            if timeInterval > 1.0 { print("$$$ \(self.typeName): \(timeInterval) ms") }
+        }
+        
+        // Return the consistent view
+        return view
     }
+
 }

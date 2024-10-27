@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct SVGParser {
 
-    static public func parse(contentsOf url: URL, settings: SVGSettings = .default) -> SVGNode? {
+    static public func parse(contentsOf url: URL, settings: SVGSettings = .default) -> SVGNode? {        
         let xml = DOMParser.parse(contentsOf: url, logger: settings.logger)
         return parse(xml: xml, settings: settings.linkIfNeeded(to: url))
     }
