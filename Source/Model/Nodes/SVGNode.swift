@@ -1,8 +1,11 @@
 import SwiftUI
 import Combine
 
-public class SVGNode: SerializableElement {
+protocol SVGClonable {
+    func clone() -> Self
+}
 
+public class SVGNode: SerializableElement, SVGClonable {
     @Published public var transform: CGAffineTransform = CGAffineTransform.identity
     @Published public var opaque: Bool
     @Published public var opacity: Double
@@ -21,6 +24,20 @@ public class SVGNode: SerializableElement {
         self.id = id
     }
 
+    public func clone() -> Self {
+        SVGNode(transform: transform, opaque: opaque, opacity: opacity, clip: clip?.clone(), mask: mask?.clone(), id: id) as! Self
+    }
+
+    func copyFrom(_ other: SVGNode) -> Self {
+        self.transform = other.transform
+        self.opaque = other.opaque
+        self.opacity = other.opacity
+        self.clip = other.clip?.clone()
+        self.mask = other.mask?.clone()
+        self.id = other.id
+        return self
+    }
+    
     public func bounds() -> CGRect {
         let frame = frame()
         return CGRect(x: 0, y: 0, width: frame.width, height: frame.height)

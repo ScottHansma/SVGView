@@ -23,6 +23,10 @@ public class SVGUserSpaceNode: SVGNode {
         self.userSpace = userSpace
     }
     
+    override public func clone() -> Self {
+        (SVGUserSpaceNode(node: node.clone(), userSpace: userSpace) as! Self).copyFrom(self)
+    }
+    
     override func serialize(_ serializer: Serializer) {
         serializer.add("userSpace", userSpace)
         super.serialize(serializer)

@@ -22,6 +22,10 @@ public class SVGImage: SVGNode {
         self.height = height
     }
 
+    override public func clone() -> Self {
+        (SVGImage(x: x, y: y, width: width, height: height) as! Self).copyFrom(self)
+    }
+    
     override func serialize(_ serializer: Serializer) {
         serializer.add("x", x, 0).add("y", y, 0).add("width", width, 0).add("height", height, 0)
         super.serialize(serializer)

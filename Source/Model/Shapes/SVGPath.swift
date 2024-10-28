@@ -19,6 +19,11 @@ public class SVGPath: SVGShape, ObservableObject {
         frame()
     }
 
+    override public func clone() -> Self {
+        // SDH TODO: do i need to deep clone segments?
+        (SVGPath(segments: segments, fillRule: fillRule) as! Self).copyFrom(self)
+    }
+    
     override func serialize(_ serializer: Serializer) {
         let path = segments.map { s in "\(s.type)\(s.data.compactMap { $0.serialize() }.joined(separator: ","))" }.joined(separator: " ")
         serializer.add("path", path)

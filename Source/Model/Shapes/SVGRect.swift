@@ -26,6 +26,10 @@ public class SVGRect: SVGShape, ObservableObject {
         self.height = rect.height
     }
 
+    override public func clone() -> Self {
+        (SVGRect(x: x, y: y, width: width, height: height, rx: rx, ry: ry) as! Self).copyFrom(self)
+    }
+    
     override public func frame() -> CGRect {
         CGRect(x: x, y: y, width: width, height: height)
     }

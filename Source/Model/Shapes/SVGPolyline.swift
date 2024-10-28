@@ -13,6 +13,10 @@ public class SVGPolyline: SVGShape, ObservableObject {
         self.points = points
     }
 
+    override public func clone() -> Self {
+        (SVGPolyline(points: points) as! Self).copyFrom(self)
+    }
+    
     override public func frame() -> CGRect {
         guard !points.isEmpty else {
             return .zero

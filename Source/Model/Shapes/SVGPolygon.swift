@@ -13,6 +13,10 @@ public class SVGPolygon: SVGShape, ObservableObject {
         self.points = points
     }
 
+    override public func clone() -> Self {
+        (SVGPolygon(points: points) as! Self).copyFrom(self)
+    }
+    
     override public func frame() -> CGRect {
         guard !points.isEmpty else {
             return .zero

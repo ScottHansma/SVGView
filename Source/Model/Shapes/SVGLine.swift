@@ -22,6 +22,10 @@ public class SVGLine: SVGShape, ObservableObject {
         self.y2 = y2
     }
 
+    override public func clone() -> Self {
+        (SVGLine(x1: x1, y1: y1, x2: x2, y2: y2) as! Self).copyFrom(self)
+    }
+    
     override public func frame() -> CGRect {
         return CGRect(x: min(x1, x2), y: min(y1, y2), width: abs(x1 - x2), height: abs(y1 - y2))
     }

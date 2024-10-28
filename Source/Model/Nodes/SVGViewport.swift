@@ -40,6 +40,10 @@ public class SVGViewport: SVGGroup {
         return CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
+    override public func clone() -> Self {
+        (SVGViewport(width: width, height: height, viewBox: viewBox, preserveAspectRatio: preserveAspectRatio, contents: contents.map { $0.clone() }) as! Self).copyFrom(self)
+    }
+    
     override func serialize(_ serializer: Serializer) {
         serializer.add("width", width.toString(), "100%")
         serializer.add("height", height.toString(), "100%")

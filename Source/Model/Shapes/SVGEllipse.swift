@@ -15,6 +15,10 @@ public class SVGEllipse: SVGShape, ObservableObject {
         self.ry = ry
     }
 
+    override public func clone() -> Self {
+        (SVGEllipse(cx: cx, cy: cy, rx: rx, ry: ry) as! Self).copyFrom(self)
+    }
+
     override public func frame() -> CGRect {
         CGRect(x: cx - rx, y: cy - ry, width: 2*rx, height: 2*ry)
     }

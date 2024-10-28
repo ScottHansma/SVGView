@@ -10,6 +10,10 @@ public class SVGGroup: SVGNode, ObservableObject {
         self.contents = contents
     }
 
+    override public func clone() -> Self {
+        (SVGGroup(contents: contents.map{ $0.clone() }, transform: transform, opaque: opaque, opacity: opacity, clip: clip?.clone() as? SVGUserSpaceNode, mask: mask?.clone()) as! Self).copyFrom(self)
+    }
+    
     override public func bounds() -> CGRect {
         contents.map { $0.bounds() }.reduce(contents.first?.bounds() ?? CGRect.zero) { $0.union($1) }
     }

@@ -18,6 +18,10 @@ public class SVGText: SVGNode, ObservableObject {
         super.init(transform: transform, opaque: opaque, opacity: opacity, clip: clip, mask: mask)
     }
 
+    override public func clone() -> Self {
+        (SVGText(text: text, font: font, fill: fill, stroke: stroke, textAnchor: textAnchor, transform: transform, opaque: opaque, opacity: opacity, clip: clip?.clone() as? SVGUserSpaceNode, mask: mask?.clone()) as! Self).copyFrom(self)
+    }
+    
     override func serialize(_ serializer: Serializer) {
         serializer.add("text", text).add("font", font).add("textAnchor", textAnchor)
         fill?.serialize(key: "fill", serializer: serializer)
